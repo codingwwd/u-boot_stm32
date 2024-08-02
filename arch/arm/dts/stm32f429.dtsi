@@ -656,19 +656,30 @@
 		};
 
 		mac: ethernet@40028000 {
-			compatible = "st,stm32-dwmac", "snps,dwmac-3.50a";
+			compatible = "st,stm32-dwmac";
 			reg = <0x40028000 0x8000>;
 			reg-names = "stmmaceth";
-			interrupts = <61>;
-			interrupt-names = "macirq";
-			clock-names = "stmmaceth", "mac-clk-tx", "mac-clk-rx";
 			clocks = <&rcc 0 STM32F4_AHB1_CLOCK(ETHMAC)>,
-					<&rcc 0 STM32F4_AHB1_CLOCK(ETHMACTX)>,
-					<&rcc 0 STM32F4_AHB1_CLOCK(ETHMACRX)>;
-			st,syscon = <&syscfg 0x4>;
+				 <&rcc 0 STM32F4_AHB1_CLOCK(ETHMACTX)>,
+				 <&rcc 0 STM32F4_AHB1_CLOCK(ETHMACRX)>;
+			interrupts = <61>, <62>;
+			interrupt-names = "macirq", "eth_wake_irq";
 			snps,pbl = <8>;
 			snps,mixed-burst;
-			status = "disabled";
+			pinctrl-0 = <&ethernet_mii>;
+			phy-mode = "rmii";
+			phy-handle = <&phy0>;
+
+			status = "okay";
+
+			mdio0 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				compatible = "snps,dwmac-mdio";
+				phy0: ethernet-phy@0 {
+					reg = <0>;
+				};
+			};
 		};
 
 		dma2d: dma2d@4002b000 {

@@ -46,8 +46,46 @@ int dram_init_banksize(void)
 	return 0;
 }
 
+struct stm32_syscfg_regs {
+	u32 memrmp;
+	u32 pmc;
+	u32 exticr1;
+	u32 exticr2;
+	u32 exticr3;
+	u32 exticr4;
+	u32 cmpcr;
+};
+
+/*
+ * SYSCFG registers base
+ */
+#define STM32_SYSCFG		((struct stm32_syscfg_regs *)STM32_SYSCFG_BASE)
+/* SYSCFG peripheral mode configuration register */
+#define SYSCFG_PMC_MII_RMII_SEL	BIT(23)
+
 int board_init(void)
 {
+	
+#ifdef CONFIG_ETH_DESIGNWARE
+	ofnode node;
+	
+	printf("board_init!\n");
+	node = ofnode_by_compatible(ofnode_null(), "st,stm32-dwmac");
+	if (!ofnode_valid(node))
+		return -1;
+
+	switch (ofnode_read_phy_mode(node)) {
+	case PHY_INTERFACE_MODE_RMII:
+		STM32_SYSCFG->pmc |= SYSCFG_PMC_MII_RMII_SEL;
+		break;
+	case PHY_INTERFACE_MODE_MII:
+		STM32_SYSCFG->pmc &= ~SYSCFG_PMC_MII_RMII_SEL;
+		break;
+	default:
+		printf("Unsupported PHY interface!\n");
+	}
+#endif	
+
 	return 0;
 }
 

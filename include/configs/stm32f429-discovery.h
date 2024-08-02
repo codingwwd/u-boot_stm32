@@ -18,6 +18,9 @@
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"bootargs_romfs=uclinux.physaddr=0x08180000 root=/dev/mtdblock0\0" \
 	"bootcmd_romfs=setenv bootargs ${bootargs} ${bootargs_romfs};" \
-	"bootm 0x08044000 - 0x08042000\0"
+	"bootm 0x08044000 - 0x08042000\0"  \
+	"ipaddr=192.168.0.88\0"					\
+	"serverip=192.168.0.106\0"					\
+	"bootfile=uImage\0" 
 
 #endif /* __CONFIG_H */
