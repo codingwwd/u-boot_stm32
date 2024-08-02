@@ -120,7 +120,7 @@ static const struct stm32_clk_info stm32f4_clk_info = {
 static const struct stm32_clk_info stm32f7_clk_info = {
 	/* 200 MHz */
 	.sys_pll_psc = {
-		.pll_n = 400,
+		.pll_n = 360,
 		.pll_p = 2,
 		.pll_q = 8,
 		.ahb_psc = AHB_PSC_1,

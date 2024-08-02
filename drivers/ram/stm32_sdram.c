@@ -159,7 +159,7 @@ struct stm32_sdram_params {
 
 #define SDRAM_MODE_BL_SHIFT	0
 #define SDRAM_MODE_CAS_SHIFT	4
-#define SDRAM_MODE_BL		0
+#define SDRAM_MODE_BL		1
 
 int stm32_sdram_init(struct udevice *dev)
 {
@@ -225,20 +225,21 @@ int stm32_sdram_init(struct udevice *dev)
 			ctb = FMC_SDCMR_BANK_2;
 
 		writel(ctb | FMC_SDCMR_MODE_START_CLOCK, &regs->sdcmr);
-		udelay(200);	/* 200 us delay, page 10, "Power-Up" */
+		udelay(500);	/* 200 us delay, page 10, "Power-Up" */
 		FMC_BUSY_WAIT(regs);
 
 		writel(ctb | FMC_SDCMR_MODE_PRECHARGE, &regs->sdcmr);
 		udelay(100);
 		FMC_BUSY_WAIT(regs);
 
-		writel((ctb | FMC_SDCMR_MODE_AUTOREFRESH | 7 << FMC_SDCMR_NRFS_SHIFT),
+		writel((ctb | FMC_SDCMR_MODE_AUTOREFRESH | 8 << FMC_SDCMR_NRFS_SHIFT),
 		       &regs->sdcmr);
 		udelay(100);
 		FMC_BUSY_WAIT(regs);
 
 		writel(ctb | (SDRAM_MODE_BL << SDRAM_MODE_BL_SHIFT
-		       | control->cas_latency << SDRAM_MODE_CAS_SHIFT)
+		       | control->cas_latency << SDRAM_MODE_CAS_SHIFT
+		       | 1<<9)
 		       << FMC_SDCMR_MODE_REGISTER_SHIFT | FMC_SDCMR_MODE_WRITE_MODE,
 		       &regs->sdcmr);
 		udelay(100);

@@ -21,7 +21,7 @@
 
 	memory@90000000 {
 		device_type = "memory";
-		reg = <0x90000000 0x800000>;
+		reg = <0x80000000 0x2000000>;
 	};
 
 	aliases {
@@ -59,7 +59,7 @@
 };
 
 &clk_hse {
-	clock-frequency = <8000000>;
+	clock-frequency = <25000000>;
 };
 
 &crc {
