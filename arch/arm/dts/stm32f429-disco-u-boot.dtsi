@@ -41,24 +41,28 @@
 			 * Memory configuration from sdram datasheet
 			 * IS42S16400J
 			 */
-			bank1: bank@1 {
-			       st,sdram-control = /bits/ 8 <NO_COL_8
-							    NO_ROW_12
+			bank0: bank@0 {
+			       st,sdram-control = /bits/ 8 <NO_COL_9
+							    NO_ROW_13
 							    MWIDTH_16
 							    BANKS_4
 							    CAS_3
 							    SDCLK_2
 							    RD_BURST_EN
 							    RD_PIPE_DL_0>;
-			       st,sdram-timing = /bits/ 8 <TMRD_3
+			       st,sdram-timing = /bits/ 8 <TMRD_2
 							   TXSR_7
-							   TRAS_4
+							   TRAS_6
 							   TRC_6
 							   TWR_2
 							   TRP_2 TRCD_2>;
-			       st,sdram-refcount = < 1386 >;
+			       st,sdram-refcount = < 730 >;
 		       };
 		};
+		
+
+		
+		
 	};
 };
 
@@ -157,7 +161,8 @@
 
 				 <STM32_PINMUX('G', 5, AF12)>, /* BA1 */
 				 <STM32_PINMUX('G', 4, AF12)>, /* BA0 */
-
+				 
+				 <STM32_PINMUX('G', 2, AF12)>, /* A12 */	
 				 <STM32_PINMUX('G', 1, AF12)>, /* A11 */
 				 <STM32_PINMUX('G', 0, AF12)>, /* A10 */
 				 <STM32_PINMUX('F',15, AF12)>, /* A09 */
@@ -171,11 +176,11 @@
 				 <STM32_PINMUX('F', 1, AF12)>, /* A01 */
 				 <STM32_PINMUX('F', 0, AF12)>, /* A00 */
 
-				 <STM32_PINMUX('B', 6, AF12)>, /* SDNE1 */
+				 <STM32_PINMUX('C', 2, AF12)>, /* SDNE1 */
 				 <STM32_PINMUX('C', 0, AF12)>, /* SDNWE */
 				 <STM32_PINMUX('F',11, AF12)>, /* SDNRAS */
 				 <STM32_PINMUX('G',15, AF12)>, /* SDNCAS */
-				 <STM32_PINMUX('B', 5, AF12)>, /* SDCKE1 */
+				 <STM32_PINMUX('C', 3, AF12)>, /* SDCKE1 */
 				 <STM32_PINMUX('G', 8, AF12)>; /* SDCLK */
 			slew-rate = <2>;
 			u-boot,dm-pre-reloc;
